@@ -1,0 +1,15 @@
+
+
+{{#posts}}
+<h1> {{name}} : {{content}}</h1>
+{{/posts}}
+
+
+<form method="get" action="/index">
+{{#users}}
+
+<input type="radio" name="name" value="{{name}}" />{{name}}
+
+{{/users}}
+<input type="submit" value="index">
+</form>
