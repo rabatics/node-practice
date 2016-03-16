@@ -1,15 +1,28 @@
 
 
+<script>
+
+
+</script>
+
+
+
 {{#posts}}
 <h1> {{name}} : {{content}}</h1>
 {{/posts}}
 
 
-<form method="get" action="/index">
+<form method="post" action="/users/add">
 {{#users}}
 
-<input type="radio" name="name" value="{{name}}" />{{name}}
+<input type="radio" name="name" value="{{name}}" /><a href="/index?name={{name}}">{{name}}</a>
 
 {{/users}}
-<input type="submit" value="index">
+<br>
+<br>
+
+<input type="text" name="content" />
+<input type="submit" value="add">
+<br><br>
 </form>
+

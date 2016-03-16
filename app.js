@@ -11,7 +11,7 @@ var routes = require('./routes/index');
 var users = require('./routes/users');
 var mongoose=require('mongoose');
 var app = express();
-
+var Schema=mongoose.Schema;
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hjs');
@@ -28,6 +28,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', routes);
 app.use('/index', routes);
 app.use('/users', users);
+app.use('/users/add', users);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -46,7 +48,7 @@ if (app.get('env') === 'development') {
 }
 
 mongoose.model('users',{name:String});
-mongoose.model('posts',{name:String,content:String});
+mongoose.model('posts',{_id:Schema.ObjectId,name:String,content:String});
 /*app.get('/users',function(req,res){
 
   });
