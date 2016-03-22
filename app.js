@@ -8,6 +8,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var errorHandler=require('express-error-handler');
 var routes = require('./routes/index');
+var login = require('./routes/login');
 var users = require('./routes/users');
 var mongoose=require('mongoose');
 var app = express();
@@ -29,6 +30,8 @@ app.use('/', routes);
 app.use('/index', routes);
 app.use('/users', users);
 app.use('/users/add', users);
+app.use('/userLogin',login);
+app.use('/userLogin/login',login);
 
 
 // catch 404 and forward to error handler
@@ -47,8 +50,8 @@ if (app.get('env') === 'development') {
   mongoose.connect('mongodb://127.0.0.1/test');
 }
 
-mongoose.model('users',{name:String});
-mongoose.model('posts',{_id:Schema.ObjectId,name:String,content:String});
+mongoose.model('chatroom',{username:String},'chatroom');
+mongoose.model('messages',{from:String,to:String,content:String},'messages');
 /*app.get('/users',function(req,res){
 
   });

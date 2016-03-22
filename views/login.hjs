@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Login</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+       <link rel='stylesheet' href='/stylesheets/resume_css.css' />
+  </head>
+  <body bgcolor="#000000">
+  <div class="login_c">
+    <h1>Login to ChatRoom</h1>
+  <form action="/userLogin/login" method="get"><br>
+  {{error}}
+    <p><input type="text" name="username" placeholder="Username" /></p>
+     <p><input type="password" name="password" placeholder="Password" /></p>
+    <p> <input class="hButton" type="submit" /> </p>
+
+    </form>
+    </div>
+  </body>
+</html>

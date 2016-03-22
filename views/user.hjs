@@ -1,28 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>ChatRoom</title>
+    <link rel='stylesheet' href='/stylesheets/users.css' />
+   <link rel='stylesheet' href='/stylesheets/resume_css.css' />
+</head>
 
+<body bgcolor="#000000">
 
-<script>
-
-
-</script>
-
-
-
-{{#posts}}
-<h1> {{name}} : {{content}}</h1>
-{{/posts}}
-
-
-<form method="post" action="/users/add">
+<div class="otherUsers">
+<div class="chat_left">
+<h1>People</h1>
 {{#users}}
 
-<input type="radio" name="name" value="{{name}}" /><a href="/index?name={{name}}">{{name}}</a>
+<a class="hButton3"  href="/users/change?from={{fromuser}}&name={{username}}">{{username}}</a></h2><br>
 
 {{/users}}
 <br>
 <br>
+</div>
+</div>
+<div class="receiver">
+<div class="chat_right">
 
-<input type="text" name="content" />
-<input type="submit" value="add">
+{{#posts}}
+<div class="msg">
+ <a ><b>{{from}}:</b> </a>&nbsp;&nbsp;&nbsp;<a> {{content}}</a>
+</div>
+{{/posts}}
+<div class="sender" >
+<form method="post" action="/users/add" style="display:inline;">
+<input type="text" name="from" hidden="hidden" value="{{fromuser}}" />
+<input type="text" name="to" hidden="hidden" value="{{to}}" />
+
+<input type="text" class="sendtext" name="content"   placeholder="Send Message" />
+<input class="send" type="submit" value="add">
 <br><br>
 </form>
+</div>
+</div>
+</div>
 
+</body>
+</html>
