@@ -7,7 +7,7 @@
 </head>
 
 <body bgcolor="#000000">
-
+<a href="/find?from={{fromuser}}">Find Friends</a>
 <div class="otherUsers">
 <div class="chat_left">
 <h1>People</h1>

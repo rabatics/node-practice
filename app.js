@@ -10,6 +10,7 @@ var errorHandler=require('express-error-handler');
 var routes = require('./routes/index');
 var login = require('./routes/login');
 var users = require('./routes/users');
+var find = require('./routes/find');
 var mongoose=require('mongoose');
 var app = express();
 var Schema=mongoose.Schema;
@@ -32,6 +33,7 @@ app.use('/users', users);
 app.use('/users/add', users);
 app.use('/userLogin',login);
 app.use('/userLogin/login',login);
+app.use('/find',find);
 
 
 // catch 404 and forward to error handler
@@ -52,6 +54,7 @@ if (app.get('env') === 'development') {
 
 mongoose.model('chatroom',{username:String},'chatroom');
 mongoose.model('messages',{from:String,to:String,content:String},'messages');
+mongoose.model('requests',{username:String, from:String},'requests');
 /*app.get('/users',function(req,res){
 
   });

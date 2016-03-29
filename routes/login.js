@@ -10,14 +10,15 @@ router.get('/', function(req, res, next) {
 router.get('/login', function(req, res, next) {
 	var username=req.query.username;
 	var password=req.query.password;
-	db.collection('chatroom').findOne({username:username,password:password}, function(err, users) {
-    if( !err && users && password === req.query.password ) {
- mongoose.model('chatroom').find({"username":{"$nin":[username]}},function(err,others){
-	 mongoose.model('messages').find({username:username},function(err,posts){
+	db.collection('chatroom').findOne({"username":username,"password":password}, function(err, u) {
+		console.log(u.friends);
+    if( !err && u && password === req.query.password ) {
+// mongoose.model('chatroom').find({"username":{"$in":[u.friends]}},function(err,others){
+	 mongoose.model('messages').find({"username":username},function(err,posts){
 
- res.render('user',{ fromuser:username,users:others ,posts:posts});
+ res.render('user',{ fromuser:username,users:u.friends ,posts:posts});
 	 });
-	});
+//	});
  }
        
     else { res.render('login',{error:"Incorrect Username and Password"}); }
@@ -31,3 +32,16 @@ router.get('/login', function(req, res, next) {
 
 
 module.exports = router;
+
+
+
+
+
+/*
+
+db.chatroom.update({username:"rajesh"},{$pull:{friends:{$in:["abhilash"]}}})
+
+
+
+
+*/

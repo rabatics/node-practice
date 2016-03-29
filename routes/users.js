@@ -14,43 +14,58 @@ var routes = require('./index');
 
 
 router.get('/', function(req, res, next) {
-
-   mongoose.model('chatroom').find({$nin:[fromuser]},function(err,users){
-    	mongoose.model('messages').find(function(err,posts){
- 			res.render('user',{ users:users,posts:posts });
+	var fromuser=req.query.from;
+	db.collection('chatroom').findOne({"username":fromuser},function(err,fromdoc){
+ 
+    	mongoose.model('messages').find({"$or":[{"from":fromuser},{"to":fromuser}]},function(err,posts){
+ 			res.render('user',{ users:fromdoc.friends,posts:posts });
     	});
    
 });
-});
+   });
+
 
 router.get('/change',function(req, res, next) {
 	var fromname=req.query.from;
 var toname= req.query.name;
+db.collection('chatroom').findOne({"username":fromname},function(err,fromdoc){ 
 	 mongoose.model('messages').find({ $or: [ { "from": fromname ,"to":toname}, { "from": toname,"to":fromname } ] },function(err,posts){
-    	mongoose.model('chatroom').find({"username":{"$nin":[fromname]}},function(err,users){
- 			res.render('user',{ users:users,posts:posts,fromuser:fromname,to:toname });
+    	
+ 			res.render('user',{ users:fromdoc.friends,posts:posts,fromuser:fromname,to:toname });
     	});
    
 });
-});
+	  });
+
 
 router.post('/add', function(req, res, next) {
 	var fromname=req.body.from;
 var toname= req.body.to;
 var contentnew= req.body.content;
-var fromuser=db.collection('chatroom').findOne({"username":fromname});
+db.collection('chatroom').findOne({"username":fromname},function(err,fromdoc){ 
 	db.collection('messages').insert({"from":fromname,"to":toname,"content":contentnew});
 		
 			 mongoose.model('messages').find({ $or: [ { "from": fromname ,"to":toname}, { "from": toname,"to":fromname } ] },function(err,posts){
-    	mongoose.model('chatroom').find({"username":{"$nin":[fromname]}},function(err,users){
- 			res.render('user',{ users:users,posts:posts,fromuser:fromname,to:toname });
+    	 
+ 			res.render('user',{ users:fromdoc.friends,posts:posts,fromuser:fromname,to:toname });
     	});
    
 });
-		
-	});
+	});	
+	
    
 
+   router.get('/getData', function(req, res, next) {
+   	res.send({txt:"2016",data:"23,45,67,89,12,34,45,64,23,45,67,45"});
+
+		
+	});
+
+  router.post('/postData', function(req, res, next) {
+   	res.send({txt:"2016",data:"23,45,67,89,12,34,45,64,23,45,67,45"});
+
+		
+	});
 
 
 

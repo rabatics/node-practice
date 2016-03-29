@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Finf Friends</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+       <link rel='stylesheet' href='/stylesheets/resume_css.css' />
+  </head>
+  <body bgcolor="#000000">
+  <a href="/users?from={{fromuser}}">ChatRoom</a>
+  <div class="login_c">
+    <h1>Find Friends</h1>
+  <form action="/find/friend" method="get"><br>
+<input type="text" name="from" hidden="hidden" value="{{fromuser}}" />
+    <p><input type="text" name="email" placeholder="Email" /></p>
+     
+    <p> <input class="hButton" type="submit" /> </p>
+
+    </form>
+
+{{#friends}}
+
+<a href="/find/addfriend?username={{username}}&from={{fromuser}}">{{username}}</a>
+
+
+{{/friends}}
+{{^friends}}
+  {{error}}
+{{/friends}}
+    </div>
+  </body>
+</html>
