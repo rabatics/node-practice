@@ -5,23 +5,32 @@ var db=mongoose.connection;
 /* GET home page. */
 router.get('/', function(req, res, next) {
   var fromuser=req.query.from;
-  res.render('find',{fromuser:fromuser});
+  mongoose.model('requests').find({"username":fromuser},function(err,requests){
+
+
+  res.render('find',{fromuser:fromuser,requests:requests});
 });
+  });
+
+
 
 router.get('/friend', function(req, res, next) {
 	var email=req.query.email;
 	var username=req.query.from;
 	mongoose.model('chatroom').find({"email":email,"friends.username":{"$nin":[username]}}, function(err, user) {
+    mongoose.model('requests').find({"username":username},function(err,requests){
     if( !err && user) {
    
   res.render('find',{ fromuser:username,friends:user});
  }
        
   else { 
-    	res.render('find',{error:"No friends Found!",fromuser:fromuser});
+    	res.render('find',{error:"No friends Found!",fromuser:fromuser,requests:requests});
     	 }
 
 });
+    });
+    
 	
 });
 
@@ -34,11 +43,29 @@ router.get('/addfriend', function(req, res, next) {
 
 	db.collection('requests').insert({"username":username,"from":fromuser});
    console.log("added");
-  res.render('find',{ fromuser:fromuser,error:"A friend request has been sent to "+username});
+    mongoose.model('requests').find({"username":fromuser},function(err,requests){
+  res.render('find',{ fromuser:fromuser,requests:requests,error:"A friend request has been sent to "+username});
+});
  
  
 
 	
+});
+
+
+router.get('/accept',function(req,res,next){
+var username=req.query.from;
+var from1=req.query.username;
+mongoose.model('chatroom').update({"username":username},{"$push":{"friends":{"username":from1}}},function(err,done1){
+mongoose.model('chatroom').update({"username":from1},{"$push":{"friends":{"username":username}}},function(err,done2){
+mongoose.model('requests').remove({"username":username,"from":from1},function(err,done3){
+ mongoose.model('requests').find({"username":username},function(err,requests){
+res.render('find',{fromuser:username,requests:requests,error:from1+" has been added to your Friends List!"});
+});
+
+});
+});
+});
 });
 
 

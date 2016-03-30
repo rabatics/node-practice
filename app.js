@@ -52,7 +52,7 @@ if (app.get('env') === 'development') {
   mongoose.connect('mongodb://127.0.0.1/test');
 }
 
-mongoose.model('chatroom',{username:String},'chatroom');
+mongoose.model('chatroom',{username:String,friends:[{username:String}]},'chatroom');
 mongoose.model('messages',{from:String,to:String,content:String},'messages');
 mongoose.model('requests',{username:String, from:String},'requests');
 /*app.get('/users',function(req,res){

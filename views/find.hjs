@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Finf Friends</title>
+    <title>Find Friends</title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
        <link rel='stylesheet' href='/stylesheets/resume_css.css' />
   </head>
@@ -26,6 +26,19 @@
 {{^friends}}
   {{error}}
 {{/friends}}
+
+
     </div>
+
+ <div class="login_c">
+  <h1>Pending Friend Requests</h1>
+{{#requests}}
+<a href="/find/accept?username={{from}}&from={{fromuser}}">{{from}}</a>
+
+{{/requests}}
+ </div>
+
+
+
   </body>
 </html>

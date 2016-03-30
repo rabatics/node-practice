@@ -18,7 +18,7 @@ router.get('/', function(req, res, next) {
 	db.collection('chatroom').findOne({"username":fromuser},function(err,fromdoc){
  
     	mongoose.model('messages').find({"$or":[{"from":fromuser},{"to":fromuser}]},function(err,posts){
- 			res.render('user',{ users:fromdoc.friends,posts:posts });
+ 			res.render('user',{ fromuser:fromuser,users:fromdoc.friends,posts:posts });
     	});
    
 });
