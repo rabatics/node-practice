@@ -11,6 +11,8 @@ var routes = require('./routes/index');
 var login = require('./routes/login');
 var users = require('./routes/users');
 var find = require('./routes/find');
+var group = require('./routes/group');
+
 var mongoose=require('mongoose');
 var app = express();
 var Schema=mongoose.Schema;
@@ -22,7 +24,7 @@ app.set('view engine', 'hjs');
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(require('less-middleware')(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
@@ -34,6 +36,7 @@ app.use('/users/add', users);
 app.use('/userLogin',login);
 app.use('/userLogin/login',login);
 app.use('/find',find);
+app.use('/group',group);
 
 
 // catch 404 and forward to error handler
@@ -55,6 +58,7 @@ if (app.get('env') === 'development') {
 mongoose.model('chatroom',{username:String,friends:[{username:String}]},'chatroom');
 mongoose.model('messages',{from:String,to:String,content:String},'messages');
 mongoose.model('requests',{username:String, from:String},'requests');
+mongoose.model('chatroomgrp',{groupname:String,members:[{username:String}]},'chatroom')
 /*app.get('/users',function(req,res){
 
   });

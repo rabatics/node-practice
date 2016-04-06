@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Create Group</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+       <link rel='stylesheet' href='/stylesheets/resume_css.css' />
+  </head>
+  <body bgcolor="#000000">
+  <a href="/users?from={{fromuser}}">ChatRoom</a>
+  <div class="login_c">
+    <h1>Create Group</h1>
+  <form action="/group/creategrp" method="post"><br>
+<input type="text" name="from" hidden="hidden" value="{{fromuser}}" />
+    <p><input type="text" name="gname" placeholder="Group Name" required="required" /></p>
+    Add Members:
+{{#friends}}
+    <p><input type="checkbox" name="mem" value="{{username}}" />{{username}}</p>
+     {{/friends}}
+    <p> <input class="hButton" type="submit" /> </p>
+
+    {{error}}
+
+    </form>
+    
+
+
+
+
+    </div>
+
+
+
+
+
+  </body>
+</html>

@@ -15,10 +15,11 @@ router.get('/login', function(req, res, next) {
     if( !err && u && password === req.query.password ) {
 // mongoose.model('chatroom').find({"username":{"$in":[u.friends]}},function(err,others){
 	 mongoose.model('messages').find({"username":username},function(err,posts){
-
- res.render('user',{ fromuser:username,users:u.friends ,posts:posts});
+	 	mongoose.model('chatroomgrp').find({"members":{"$elemMatch":{"username":username}}},function(err,groups){
+console.log(groups);
+ res.render('user',{ fromuser:username,users:u.friends ,posts:posts,groups:groups});
 	 });
-//	});
+	});
  }
        
     else { res.render('login',{error:"Incorrect Username and Password"}); }

@@ -18,8 +18,10 @@ router.get('/', function(req, res, next) {
 	db.collection('chatroom').findOne({"username":fromuser},function(err,fromdoc){
  
     	mongoose.model('messages').find({"$or":[{"from":fromuser},{"to":fromuser}]},function(err,posts){
- 			res.render('user',{ fromuser:fromuser,users:fromdoc.friends,posts:posts });
+    		mongoose.model('chatroomgrp').find({"members":{"$elemMatch":{"username":fromuser}}},function(err,groups){
+ 			res.render('user',{ fromuser:fromuser,users:fromdoc.friends,posts:posts,groups:groups });
     	});
+    		});
    
 });
    });
@@ -30,10 +32,26 @@ router.get('/change',function(req, res, next) {
 var toname= req.query.name;
 db.collection('chatroom').findOne({"username":fromname},function(err,fromdoc){ 
 	 mongoose.model('messages').find({ $or: [ { "from": fromname ,"to":toname}, { "from": toname,"to":fromname } ] },function(err,posts){
+	 	mongoose.model('chatroomgrp').find({"members":{"$elemMatch":{"username":fromname}}},function(err,groups){
     	
- 			res.render('user',{ users:fromdoc.friends,posts:posts,fromuser:fromname,to:toname });
+ 			res.render('user',{ users:fromdoc.friends,posts:posts,fromuser:fromname,to:toname,groups:groups });
     	});
-   
+   });
+});
+	  });
+
+
+
+router.get('/changegrp',function(req, res, next) {
+	var fromname=req.query.from;
+var gname= req.query.gname;
+db.collection('chatroom').findOne({"username":fromname},function(err,fromdoc){ 
+	 mongoose.model('messages').find({"to":gname},function(err,gposts){
+	 	mongoose.model('chatroomgrp').find({"members":{"$elemMatch":{"username":fromname}}},function(err,groups){
+    	
+ 			res.render('user',{ users:fromdoc.friends,gposts:gposts,fromuser:fromname,to:gname,groups:groups });
+    	});
+   });
 });
 	  });
 
@@ -46,10 +64,11 @@ db.collection('chatroom').findOne({"username":fromname},function(err,fromdoc){
 	db.collection('messages').insert({"from":fromname,"to":toname,"content":contentnew});
 		
 			 mongoose.model('messages').find({ $or: [ { "from": fromname ,"to":toname}, { "from": toname,"to":fromname } ] },function(err,posts){
+			 	mongoose.model('chatroomgrp').find({"members":{"$elemMatch":{"username":fromname}}},function(err,groups){
     	 
- 			res.render('user',{ users:fromdoc.friends,posts:posts,fromuser:fromname,to:toname });
+ 			res.render('user',{ users:fromdoc.friends,posts:posts,fromuser:fromname,to:toname,groups:groups});
     	});
-   
+   });
 });
 	});	
 	

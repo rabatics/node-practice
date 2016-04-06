@@ -7,7 +7,10 @@
 </head>
 
 <body bgcolor="#000000">
-<a href="/find?from={{fromuser}}">Find Friends</a>
+<nav><a href="/find?from={{fromuser}}">Find Friends</a>|
+<a href="/group/create?from={{fromuser}}">Create Group</a>|
+<a href="/logout">Logout</a>
+</nav>
 <div class="otherUsers">
 <div class="chat_left">
 <h1>People</h1>
@@ -16,6 +19,12 @@
 <a class="hButton3"  href="/users/change?from={{fromuser}}&name={{username}}">{{username}}</a></h2><br>
 
 {{/users}}
+
+<h1>Groups</h1>
+{{#groups}}
+<a class="hButton3" href="/users/changegrp?from={{fromuser}}&gname={{groupname}}">{{groupname}}</a>
+
+{{/groups}} 
 <br>
 <br>
 </div>
@@ -28,6 +37,18 @@
  <a ><b>{{from}}:</b> </a>&nbsp;&nbsp;&nbsp;<a> {{content}}</a>
 </div>
 {{/posts}}
+
+{{#gposts}}
+<div class="msg">
+ <a ><b>{{from}}:</b> </a>&nbsp;&nbsp;&nbsp;<a> {{content}}</a>
+</div>
+{{/gposts}}
+
+
+
+
+
+
 <div class="sender" >
 <form method="post" action="/users/add" style="display:inline;">
 <input type="text" name="from" hidden="hidden" value="{{fromuser}}" />
