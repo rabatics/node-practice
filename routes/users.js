@@ -14,6 +14,9 @@ var routes = require('./index');
 
 
 router.get('/', function(req, res, next) {
+	if(!req.session.user || req.session.user!=req.query.from){
+		res.redirect('/userLogin');
+	}
 	var fromuser=req.query.from;
 	db.collection('chatroom').findOne({"username":fromuser},function(err,fromdoc){
  
@@ -28,6 +31,9 @@ router.get('/', function(req, res, next) {
 
 
 router.get('/change',function(req, res, next) {
+	if(!req.session.user || req.session.user!=req.query.from){
+		res.redirect('/userLogin');
+	}
 	var fromname=req.query.from;
 var toname= req.query.name;
 db.collection('chatroom').findOne({"username":fromname},function(err,fromdoc){ 
@@ -43,6 +49,10 @@ db.collection('chatroom').findOne({"username":fromname},function(err,fromdoc){
 
 
 router.get('/changegrp',function(req, res, next) {
+	if(!req.session.user || req.session.user!=req.query.from){
+		res.redirect('/userLogin');
+	}
+
 	var fromname=req.query.from;
 var gname= req.query.gname;
 db.collection('chatroom').findOne({"username":fromname},function(err,fromdoc){ 
@@ -57,6 +67,9 @@ db.collection('chatroom').findOne({"username":fromname},function(err,fromdoc){
 
 
 router.post('/add', function(req, res, next) {
+	if(!req.session.user || req.session.user!=req.body.from){
+		res.redirect('/userLogin');
+	}
 	var fromname=req.body.from;
 var toname= req.body.to;
 var contentnew= req.body.content;

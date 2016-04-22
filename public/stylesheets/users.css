@@ -1,17 +1,17 @@
 .otherUsers{
 	float:left;
 
-	height:800px;
+	height:1000px;
 	width:30%;
-	margin-top: 100px;
-	overflow:scroll;
+	margin-top: 0px;
+	
 }
 
 .receiver{
 	float:right;
-	height:800px;
+	height:600px;
 	width:70%;
-	margin-top: 100px;
+	margin-top: 0px;
 	overflow:scroll;
 }
 

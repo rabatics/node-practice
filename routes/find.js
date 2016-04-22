@@ -4,6 +4,9 @@ var router = express.Router();
 var db=mongoose.connection;
 /* GET home page. */
 router.get('/', function(req, res, next) {
+	if(!req.session.user || req.session.user!=req.query.from){
+		res.redirect('/userLogin');
+	}
   var fromuser=req.query.from;
   mongoose.model('requests').find({"username":fromuser},function(err,requests){
 
@@ -15,7 +18,11 @@ router.get('/', function(req, res, next) {
 
 
 router.get('/friend', function(req, res, next) {
+	if(!req.session.user || req.session.user!=req.query.from){
+		res.redirect('/userLogin');
+	}
 	var email=req.query.email;
+
 	var username=req.query.from;
 	mongoose.model('chatroom').find({"email":email,"friends.username":{"$nin":[username]}}, function(err, user) {
     mongoose.model('requests').find({"username":username},function(err,requests){
@@ -37,6 +44,9 @@ router.get('/friend', function(req, res, next) {
 
 
 router.get('/addfriend', function(req, res, next) {
+	if(!req.session.user || req.session.user!=req.query.from){
+		res.redirect('/userLogin');
+	}
 	var username=req.query.username;
 	var fromuser=req.query.from;
 	
@@ -54,6 +64,9 @@ router.get('/addfriend', function(req, res, next) {
 
 
 router.get('/accept',function(req,res,next){
+	if(!req.session.user || req.session.user!=req.query.from){
+		res.redirect('/userLogin');
+	}
 var username=req.query.from;
 var from1=req.query.username;
 mongoose.model('chatroom').update({"username":username},{"$push":{"friends":{"username":from1}}},function(err,done1){

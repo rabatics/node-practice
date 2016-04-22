@@ -2,43 +2,97 @@
 <html>
   <head>
     <title>Find Friends</title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-       <link rel='stylesheet' href='/stylesheets/resume_css.css' />
-  </head>
-  <body bgcolor="#000000">
-  <a href="/users?from={{fromuser}}">ChatRoom</a>
-  <div class="login_c">
-    <h1>Find Friends</h1>
-  <form action="/find/friend" method="get"><br>
-<input type="text" name="from" hidden="hidden" value="{{fromuser}}" />
-    <p><input type="text" name="email" placeholder="Email" /></p>
+   <link rel='stylesheet' href='/stylesheets/users.css' />
+   <link rel='stylesheet' href='/stylesheets/resume_css.css' />
+   <link href="/css/theme.css" rel="stylesheet">
+   <link rel='stylesheet' href='/css/signin.css' />
+   <link rel='stylesheet' href='/css/bootstrap.css' />
+</head>
+
+<body bgcolor="#000000">
+<nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="">ChatRoom</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+           
+  <li><a href="/users?from={{fromuser}}">ChatRoom</a></li>
+ <li class="active"><a href="#">Find Friends</a></li>
+            <li><a href="/group/create?from={{fromuser}}">Create Group</a></li>
+            <li><a href="/userLogin/logout?from={{fromuser}}">Logout</a></li>
+           
+          </ul>
+        </div><!--/.nav-collapse -->
+  <div class="jumbotron">
+    <h3>Find Friends</h3>
+  <form class="form-signin" action="/find/friend" method="get"><br>
+<input  type="text" name="from" hidden="hidden" value="{{fromuser}}" />
+    <p><input class="form-control" type="text" name="email" placeholder="Email" /></p>
      
-    <p> <input class="hButton" type="submit" /> </p>
+    <p> <input class="btn btn-primary btn-block" type="submit" /> </p>
 
-    </form>
-
+    
+<div class="well">
 {{#friends}}
 
-<a href="/find/addfriend?username={{username}}&from={{fromuser}}">{{username}}</a>
+<a class="btn btn-primary" href="/find/addfriend?username={{username}}&from={{fromuser}}">{{username}}</a>
 
 
 {{/friends}}
 {{^friends}}
   {{error}}
 {{/friends}}
+</div>
 
+    
 
-    </div>
-
- <div class="login_c">
-  <h1>Pending Friend Requests</h1>
+ <div class="well">
+  <h4>Pending Friend Requests</h4>
 {{#requests}}
-<a href="/find/accept?username={{from}}&from={{fromuser}}">{{from}}</a>
+<a class="btn btn-primary" href="/find/accept?username={{from}}&from={{fromuser}}">{{from}}</a>
 
 {{/requests}}
  </div>
 
-
-
+</form>
+</div>
   </body>
 </html>
+
+<!--   <link rel='stylesheet' href='/stylesheets/users.css' />
+   <link rel='stylesheet' href='/stylesheets/resume_css.css' />
+   <link href="/css/theme.css" rel="stylesheet">
+   <link rel='stylesheet' href='/css/bootstrap.css' />
+</head>
+
+<body bgcolor="#000000">
+<nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="">ChatRoom</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="#">Home</a></li>
+            <li><a href="/find?from={{fromuser}}">Find Friends</a></li>
+            <li><a href="/group/create?from={{fromuser}}">Create Group</a></li>
+            <li><a href="/userLogin/logout?from={{fromuser}}">Logout</a></li>
+           
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>-->

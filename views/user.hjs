@@ -4,27 +4,54 @@
     <title>ChatRoom</title>
     <link rel='stylesheet' href='/stylesheets/users.css' />
    <link rel='stylesheet' href='/stylesheets/resume_css.css' />
+   <link href="/css/theme.css" rel="stylesheet">
+   <link rel='stylesheet' href='/css/bootstrap.css' />
 </head>
 
 <body bgcolor="#000000">
-<nav><a href="/find?from={{fromuser}}">Find Friends</a>|
-<a href="/group/create?from={{fromuser}}">Create Group</a>|
-<a href="/logout">Logout</a>
-</nav>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="">ChatRoom</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="#">Home</a></li>
+            <li><a href="/find?from={{fromuser}}">Find Friends</a></li>
+            <li><a href="/group/create?from={{fromuser}}">Create Group</a></li>
+            <li><a href="/userLogin/logout?from={{fromuser}}">Logout</a></li>
+           
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
 <div class="otherUsers">
-<div class="chat_left">
+<div class="jumbotron1">
+<div style="height:50%;width:100%;overflow: scroll;text-align: center;">
 <h1>People</h1>
+ 
 {{#users}}
 
-<a class="hButton3"  href="/users/change?from={{fromuser}}&name={{username}}">{{username}}</a></h2><br>
+<p><a class="btn btn-primary"  href="/users/change?from={{fromuser}}&name={{username}}">{{username}}</a></p><br>
 
 {{/users}}
-
+</div>
+<br><br>
+<div style="height:50%;width:100%;overflow: scroll;text-align: center;">
 <h1>Groups</h1>
+ 
 {{#groups}}
-<a class="hButton3" href="/users/changegrp?from={{fromuser}}&gname={{groupname}}">{{groupname}}</a>
+<p><a class="btn btn-warning" href="/users/changegrp?from={{fromuser}}&gname={{groupname}}">{{groupname}}</a></p><br>
 
 {{/groups}} 
+</div>
 <br>
 <br>
 </div>
@@ -33,13 +60,13 @@
 <div class="chat_right">
 
 {{#posts}}
-<div class="msg">
+<div class="well">
  <a ><b>{{from}}:</b> </a>&nbsp;&nbsp;&nbsp;<a> {{content}}</a>
 </div>
 {{/posts}}
 
 {{#gposts}}
-<div class="msg">
+<div class="well">
  <a ><b>{{from}}:</b> </a>&nbsp;&nbsp;&nbsp;<a> {{content}}</a>
 </div>
 {{/gposts}}
@@ -55,7 +82,7 @@
 <input type="text" name="to" hidden="hidden" value="{{to}}" />
 
 <input type="text" class="sendtext" name="content"   placeholder="Send Message" />
-<input class="send" type="submit" value="add">
+<input class="btn btn-primary" type="submit" value="add">
 <br><br>
 </form>
 </div>

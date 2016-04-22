@@ -4,6 +4,9 @@ var router = express.Router();
 var db=mongoose.connection;
 /* GET home page. */
 router.get('/', function(req, res, next) {
+  if(!req.session.user || req.session.user!=req.query.from){
+    res.redirect('/userLogin');
+  }
   var fromuser=req.query.from;
   mongoose.model('requests').find({"username":fromuser},function(err,requests){
 
@@ -15,6 +18,9 @@ router.get('/', function(req, res, next) {
 
 
 router.get('/create', function(req, res, next) {
+  if(!req.session.user || req.session.user!=req.query.from){
+    res.redirect('/userLogin');
+  }
 	
 	var username=req.query.from;
 	db.collection('chatroom').findOne({"username":username},function(err,fromdoc){ 
@@ -30,6 +36,9 @@ router.get('/create', function(req, res, next) {
 
 
 router.post('/creategrp', function(req, res, next) {
+  if(!req.session.user || req.session.user!=req.body.from){
+    res.redirect('/userLogin');
+  }
 	var gname=req.body.gname;
 	var fromuser=req.body.from;
   var grpfriends=req.body.mem;
