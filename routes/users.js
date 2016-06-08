@@ -88,7 +88,7 @@ db.collection('chatroom').findOne({"username":fromname},function(err,fromdoc){
    
 
    router.get('/getData', function(req, res, next) {
-   	res.send({txt:"2016",data:"23,45,67,89,12,34,45,64,23,45,67,45"});
+   	res.send({txt:"2016",data:"23,45,67,89,12,34,45,64,23,45,67,45,34,56,26,36,67,65,56,23,13,87,56,34,23,65,78,23,56,12,76,78,34,63"});
 
 		
 	});
@@ -100,6 +100,23 @@ db.collection('chatroom').findOne({"username":fromname},function(err,fromdoc){
 	});
 
 
+
+
+router.get('/api/change',function(req, res, next) {
+	/*if(!req.session.user || req.session.user!=req.query.from){
+		res.redirect('/userLogin');
+	}*/
+var fromname=req.query.from;
+var toname= req.query.name;
+//db.collection('chatroom').findOne({"username":fromname},function(err,fromdoc){ 
+	 mongoose.model('messages').find({ $or: [ { "from": fromname ,"to":toname}, { "from": toname,"to":fromname } ] },function(err,posts){
+	 //	mongoose.model('chatroomgrp').find({"members":{"$elemMatch":{"username":fromname}}},function(err,groups){
+    	
+ 			res.send({posts:posts});
+    	});
+   });
+//});
+	//  });
 
 
 

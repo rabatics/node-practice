@@ -46,7 +46,7 @@ app.use('/index', routes);
 app.use('/users', users);
 app.use('/users/add', users);
 app.use('/userLogin',login);
-app.use('/userLogin/login',login);
+//app.use('/userLogin/login',login);
 app.use('/find',find);
 app.use('/group',group);
 

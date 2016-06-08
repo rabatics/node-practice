@@ -95,3 +95,57 @@ db.chatroom.update({username:"rajesh"},{$pull:{friends:{$in:["abhilash"]}}})
 
 
 */
+
+
+
+
+
+router.get('/api/login', function(req, res, next) {
+	var username=req.query.username;
+	var password=req.query.password;
+
+	db.collection('chatroom').findOne({"username":username,"password":password}, function(err, u) {
+		
+    if( !err && u && password === req.query.password ) {
+    	console.log(u.friends);
+// mongoose.model('chatroom').find({"username":{"$in":[u.friends]}},function(err,others){
+	 mongoose.model('messages').find({"username":username},function(err,posts){
+	 	mongoose.model('chatroomgrp').find({"members":{"$elemMatch":{"username":username}}},function(err,groups){
+console.log(groups);
+//req.session.user=username;
+ res.send({status:1, fromuser:username,email:u.email});     //,users:u.friends ,posts:posts,groups:groups
+	 });
+	});
+ }
+       
+    else { res.send({status:0,username:username,email:"try again"}); }
+
+});
+	
+});
+
+
+router.get('/api/friends', function(req, res, next) {
+	var username=req.query.username;
+	
+
+	db.collection('chatroom').findOne({"username":username}, function(err, u) {
+		
+    if( !err && u ) {
+    	console.log(u.friends);
+
+//	 mongoose.model('messages').find({"username":username},function(err,posts){
+	 	mongoose.model('chatroomgrp').find({"members":{"$elemMatch":{"username":username}}},function(err,groups){
+console.log(groups);
+//req.session.user=username;
+ res.send({status:1,friends:u.friends});     //,users:u.friends ,posts:posts,groups:groups
+	 });
+//	});
+ }
+       
+    else { res.send({status:0,friends:[]}); }
+
+});
+	
+});
+
