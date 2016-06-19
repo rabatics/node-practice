@@ -149,3 +149,27 @@ console.log(groups);
 	
 });
 
+
+router.get('/api/groups', function(req, res, next) {
+	var username=req.query.username;
+	
+
+	db.collection('chatroom').findOne({"username":username}, function(err, u) {
+		
+    if( !err && u ) {
+    	console.log(u.friends);
+
+//	 mongoose.model('messages').find({"username":username},function(err,posts){
+	 	mongoose.model('chatroomgrp').find({"members":{"$elemMatch":{"username":username}}},function(err,groups){
+console.log(groups);
+//req.session.user=username;
+ res.send({status:1,groups:groups});     //,users:u.friends ,posts:posts,groups:groups
+	 });
+//	});
+ }
+       
+    else { res.send({status:0,friends:[]}); }
+
+});
+	
+});
